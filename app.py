@@ -4,8 +4,6 @@ import cv2
 import numpy as np
 import os
 import gdown
-import tensorflow as tf
-from tensorflow.keras.applications.mobilenet_v2 import MobileNetV2, preprocess_input
 from skimage.feature import hog, local_binary_pattern, graycomatrix, graycoprops
 
 st.title("🩺 Pneumonia Detection System")
@@ -39,7 +37,6 @@ final_sc = joblib.load("scaler_tool.pkl")
 
 # تحميل MobileNetV2
 
-model_net = MobileNetV2(weights='imagenet', include_top=False, input_shape=(224, 224, 3))
 
 # =========================
 
@@ -51,9 +48,7 @@ def extract_features(img_rgb):
 img_224 = cv2.resize(img_rgb, (224, 224))
 
 ```
-f_deep = tf.keras.layers.GlobalAveragePooling2D()(
-    model_net(preprocess_input(np.expand_dims(img_224, 0)))
-).numpy().flatten()
+
 
 gray_img = cv2.cvtColor(img_rgb, cv2.COLOR_RGB2GRAY)
 
